@@ -1,0 +1,93 @@
+spring:
+  datasource:
+    generate-unique-name: false
+  jpa:
+    hibernate:
+      ddl-auto: update
+  session:
+    store-type: jdbc
+    jdbc:
+      initialize-schema: always
+      schema: classpath:org/springframework/session/jdbc/schema-postgres.sql
+      table-name: SPRING_SESSION
+    timeout: 900
+  mail:
+    host: email-smtp.us-west-2.amazonaws.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: false
+            required: false
+  kafka:
+    properties:
+      sasl:
+        jaas:
+          config: ${SASL_CONFIG}
+        mechanism: PLAIN
+      security:
+        protocol: SASL_PLAINTEXT
+    jaas:
+      enabled: true
+  cloud:
+    stream:
+      kafka:
+        binder:
+          brokers: 192.168.123.252:9092
+server:
+  ssl:
+    key-store: keystore/keystore.p12
+    key-store-password: ${KEYSTORE_PASSWORD}
+    key-store-type: PKCS12
+    key-alias: tomcat
+    key-password: ${KEY_PASSWORD}
+  session:
+    cookie:
+      http-only: true
+    servlet:
+      session:
+        cookie:
+          secure: true
+        tracking-modes: cookie
+        timeout: 30m
+        persistent: true
+
+session:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://192.168.123.252:5433/sessiondb
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}    
+
+primary:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://192.168.123.252:5433/bitcoinprice
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+app:
+  auth_post_url: ${AUTH_URL}
+  auth_post_port: 8690
+  auth_user_name: lqwd-front-end-microservice2
+  auth_password: ${AUTH_PASSWORD}
+  auth_grand_type: ${AUTH_GRANT_TYPE}
+  auth_client_id: ${AUTH_CLIENT_ID}
+  lndap_url: ${LND_URL}
+  lndap_port: 8591
+
+
+features:
+  session_active: true
+
+coinmarketcap-api: ${COIN_MARKEY_API_KEY}
+#captcha
+google:
+  recaptcha:
+    key:
+      site: ${CAPTCHA_SITE_KEY}
+      secret: ${CAPTCHA_SECRET}
+      threshold: 0.5
