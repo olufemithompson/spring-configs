@@ -52,10 +52,10 @@ logging:
   level:
     org:
       springframework:
-        security: DEBUG
+        security:
           oauth2: debug
         web: DEBUG
-      hibernate: debug
+      hibernate:
         SQL: debug
         type:
           descriptor:
